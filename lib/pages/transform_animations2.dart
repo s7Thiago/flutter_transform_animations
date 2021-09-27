@@ -66,14 +66,17 @@ class _TransformAnimations2State extends State<TransformAnimations2> {
 
               return Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.identity()
-                    ..setEntry(3, 2, 0.001)
-                    ..rotateX(value * pi),
-                  child: Image.network(
-                    _images[index],
-                    fit: BoxFit.fitWidth,
+                child: Opacity(
+                  opacity: 1 - value,
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 2, 0.002)
+                      ..rotateX(value * pi),
+                    child: Image.network(
+                      _images[index],
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 ),
               );
