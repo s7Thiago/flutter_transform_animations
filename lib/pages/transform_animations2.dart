@@ -60,7 +60,7 @@ class _TransformAnimations2State extends State<TransformAnimations2> {
             controller: _pageController,
             itemBuilder: (context, index) {
               // Extraindo a porcentagem do valor da página atual para a próxima
-              final percent = 1 - (_currentPage - index);
+              final percent = (_currentPage - index);
               final value = percent.clamp(0.0, 1.0);
               print(percent);
 
