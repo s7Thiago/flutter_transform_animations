@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -64,8 +66,11 @@ class _TransformAnimations2State extends State<TransformAnimations2> {
 
               return Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Transform.scale(
-                  scale: value * 1.5,
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..setEntry(3, 2, 0.001)
+                    ..rotateX(value * pi),
                   child: Image.network(
                     _images[index],
                     fit: BoxFit.fitWidth,
