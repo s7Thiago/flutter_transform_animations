@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -18,16 +16,27 @@ class _TransformAnimations2State extends State<TransformAnimations2> {
 
     setState(() {
       _images = (response.data as List).map((e) {
-        print('\n\n$e');
         return e['download_url'].toString();
       }).toList();
     });
   }
 
+  final _pageController = PageController();
+
+  void _listener() {}
+
   @override
   void initState() {
     _loadData();
+    _pageController.addListener(_listener);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.removeListener(_listener);
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -41,6 +50,7 @@ class _TransformAnimations2State extends State<TransformAnimations2> {
           padding: const EdgeInsets.symmetric(vertical: 50),
           child: PageView.builder(
             itemCount: _images.length,
+            controller: _pageController,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(20.0),
