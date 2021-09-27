@@ -22,8 +22,13 @@ class _TransformAnimations2State extends State<TransformAnimations2> {
   }
 
   final _pageController = PageController();
+  double _currentPage = 0.0;
 
-  void _listener() {}
+  void _listener() {
+    setState(() {
+      _currentPage = _pageController.page!;
+    });
+  }
 
   @override
   void initState() {
@@ -52,11 +57,18 @@ class _TransformAnimations2State extends State<TransformAnimations2> {
             itemCount: _images.length,
             controller: _pageController,
             itemBuilder: (context, index) {
+              final percent = _currentPage - index;
+              print(percent);
+              // Extraindo a porcentagem do valor da página atual para a próxima
+
               return Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Image.network(
-                  _images[index],
-                  fit: BoxFit.cover,
+                child: Transform.scale(
+                  scale: percent * 1.5,
+                  child: Image.network(
+                    _images[index],
+                    fit: BoxFit.cover,
+                  ),
                 ),
               );
             },
