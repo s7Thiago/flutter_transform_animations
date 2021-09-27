@@ -59,15 +59,16 @@ class _TransformAnimations2State extends State<TransformAnimations2> {
             itemBuilder: (context, index) {
               // Extraindo a porcentagem do valor da página atual para a próxima
               final percent = 1 - (_currentPage - index);
+              final value = percent.clamp(0.0, 1.0);
               print(percent);
 
               return Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Transform.scale(
-                  scale: percent * 1.5,
+                  scale: value * 1.5,
                   child: Image.network(
                     _images[index],
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
               );
