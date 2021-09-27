@@ -22,7 +22,10 @@ class _TransformAnimations1State extends State<TransformAnimations1> {
           children: [
             const FlutterLogo(size: 200),
             const SizedBox(height: 15),
-            Image.asset('assets/images/logo.png', height: 100),
+            Transform.scale(
+              scale: _value * 2.0,
+              child: Image.asset('assets/images/logo.png', height: 100),
+            ),
             Slider(
               value: _value,
               onChanged: (value) {
