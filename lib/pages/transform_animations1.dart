@@ -22,8 +22,8 @@ class _TransformAnimations1State extends State<TransformAnimations1> {
           children: [
             const FlutterLogo(size: 200),
             const SizedBox(height: 15),
-            Transform.translate(
-              offset: Offset(_value * -30, _value * 30),
+            Transform.rotate(
+              angle: _value * 2 * 3.141592,
               child: Image.asset('assets/images/logo.png', height: 100),
             ),
             Slider(
