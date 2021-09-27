@@ -13,7 +13,9 @@ class ShrinkTopList extends StatefulWidget {
 class _ShrinkTopListState extends State<ShrinkTopList> {
   final scrollController = ScrollController();
 
-  void onListen() {}
+  void onListen() {
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -34,42 +36,58 @@ class _ShrinkTopListState extends State<ShrinkTopList> {
       appBar: AppBar(
         title: Text('Shrink top list'),
       ),
-      body: CustomScrollView(
-        controller: scrollController,
-        slivers: [
-          SliverList(
-            // ! Este delegate será usando porque serve para construir os itens dinamicamente
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final character = characters[index];
-                return Card(
-                  color: Color(character.color),
-                  child: SizedBox(
-                    height: itemSize,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(
-                              character.title,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: CustomScrollView(
+          controller: scrollController,
+          slivers: [
+            SliverList(
+              // ! Este delegate será usando porque serve para construir os itens dinamicamente
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  final character = characters[index];
+
+                  final itemPositionOffset = index * itemSize;
+                  final difference =
+                      scrollController.offset - itemPositionOffset;
+                  final percent = 1 - (difference / itemSize);
+                  double opacity = percent.clamp(0.0, 1.0);
+
+                  return Opacity(
+                    opacity: opacity,
+                    child: Transform(
+                      transform: Matrix4.identity()..scale(percent, 1.0),
+                      child: Card(
+                        color: Color(character.color),
+                        child: SizedBox(
+                          height: itemSize,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Text(
+                                    character.title,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                              Image.network(character.avatar),
+                            ],
                           ),
                         ),
-                        Image.network(character.avatar),
-                      ],
+                      ),
                     ),
-                  ),
-                );
-              },
-              childCount: characters.length,
-            ),
-          )
-        ],
+                  );
+                },
+                childCount: characters.length,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
