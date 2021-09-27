@@ -57,9 +57,9 @@ class _TransformAnimations2State extends State<TransformAnimations2> {
             itemCount: _images.length,
             controller: _pageController,
             itemBuilder: (context, index) {
-              final percent = _currentPage - index;
-              print(percent);
               // Extraindo a porcentagem do valor da página atual para a próxima
+              final percent = 1 - (_currentPage - index);
+              print(percent);
 
               return Padding(
                 padding: const EdgeInsets.all(20.0),
