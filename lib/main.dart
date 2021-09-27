@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:transform_example/pages/transform_animations1.dart';
+import 'package:transform_example/pages/select_example.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const TransformAnimations1(),
+      home: const SelectExample(),
     );
   }
 }
