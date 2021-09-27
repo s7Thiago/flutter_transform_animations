@@ -25,10 +25,10 @@ class _TransformAnimations1State extends State<TransformAnimations1> {
             const FlutterLogo(size: 200),
             const SizedBox(height: 15),
             Transform(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.topRight,
               transform: Matrix4.identity()
-                ..setEntry(3, 2, -0.001)
-                ..rotateX(pi * _value),
+                ..setEntry(3, 2, 0.002)
+                ..rotateY(pi * _value),
               child: Image.asset('assets/images/logo.png', height: 300),
             ),
             Slider(
