@@ -27,7 +27,7 @@ class _TransformAnimations1State extends State<TransformAnimations1> {
             Transform(
               alignment: Alignment.center,
               transform: Matrix4.identity()
-                ..scale(_value * 2.0)
+                ..setEntry(3, 2, 0.001)
                 ..rotateY(pi * _value),
               child: Image.asset('assets/images/logo.png', height: 300),
             ),
