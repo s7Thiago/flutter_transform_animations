@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class TransformAnimations1 extends StatefulWidget {
@@ -22,9 +24,12 @@ class _TransformAnimations1State extends State<TransformAnimations1> {
           children: [
             const FlutterLogo(size: 200),
             const SizedBox(height: 15),
-            Transform.rotate(
-              angle: _value * 2 * 3.141592,
-              child: Image.asset('assets/images/logo.png', height: 100),
+            Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..scale(_value * 2.0)
+                ..rotateY(pi * _value),
+              child: Image.asset('assets/images/logo.png', height: 300),
             ),
             Slider(
               value: _value,
