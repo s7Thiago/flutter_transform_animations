@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:transform_example/pages/transform_animations1.dart';
-import 'package:transform_example/pages/transform_animations2.dart';
+import 'package:transform_example/pages/list/shrink_top_list.dart';
+import 'package:transform_example/pages/transform/transform_animations1.dart';
+import 'package:transform_example/pages/transform/transform_animations2.dart';
 
 
 class SelectExample extends StatelessWidget {
@@ -14,6 +15,9 @@ class SelectExample extends StatelessWidget {
       },
       {
         'Transform Animations Example 2': const TransformAnimations2(),
+      },
+      {
+        'Shrink Top List': const ShrinkTopList(),
       },
     ];
 
