@@ -11,6 +11,7 @@ class Transitions1Page extends StatefulWidget {
 
 class _Transitions1PageState extends State<Transitions1Page> {
   List<Character>? _characters;
+  bool _isListMode = true;
 
   // Simula o carregamento demorado da lista de personagens
   Future<void> _loadCharactersData() async {
@@ -29,15 +30,33 @@ class _Transitions1PageState extends State<Transitions1Page> {
     super.initState();
   }
 
+  Widget _getBodWidget() {
+    if (_isListMode) {
+      return HomeListView(charactersCollection: _characters!);
+    }
+    return HomeGridView(charactersCollection: _characters!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Custom Transitions'),
-        actions: const [],
+        actions: [
+          IconButton(
+            icon: Icon(_isListMode
+                ? Icons.view_list_rounded
+                : Icons.grid_view_rounded),
+            onPressed: () {
+              setState(() {
+                _isListMode = !_isListMode;
+              });
+            },
+          ),
+        ],
       ),
       body: _characters != null
-          ? HomeListView(charactersCollection: _characters!)
+          ? _getBodWidget()
           : const Center(
               child: CircularProgressIndicator(),
             ),
