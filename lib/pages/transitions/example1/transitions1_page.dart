@@ -71,7 +71,16 @@ class HomeGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return GridView.builder(
+      itemCount: charactersCollection.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1,
+      ),
+      itemBuilder: (context, index) {
+        return HomeItem(character: charactersCollection[index]);
+      },
+    );
   }
 }
 
