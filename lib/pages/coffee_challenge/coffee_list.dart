@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:transform_example/pages/coffee_chalenge/model/coffee.dart';
+import 'package:transform_example/pages/coffee_challenge/model/coffee.dart';
+
+const _duration = Duration(milliseconds: 300);
 
 class CoffeeList extends StatefulWidget {
   const CoffeeList({Key? key}) : super(key: key);
@@ -62,15 +64,6 @@ class _CoffeeListState extends State<CoffeeList> {
               ]),
             ),
           ),
-          Positioned(
-            left: 0,
-            top: 0,
-            right: 0,
-            height: 100,
-            child: Container(
-              color: Colors.red,
-            ),
-          ),
           Transform.scale(
             scale: 1.6,
             alignment: Alignment.bottomCenter,
@@ -108,7 +101,27 @@ class _CoffeeListState extends State<CoffeeList> {
                 );
               },
             ),
-          )
+          ),
+          Positioned(
+            left: 0,
+            top: 0,
+            right: 0,
+            height: 100,
+            child: Column(
+              children: [
+                AnimatedSwitcher(
+                  duration: _duration,
+                  child: Text(
+                    '\$${coffees[_currentPage.toInt()].price.toStringAsFixed(2)}',
+                    key: Key(coffees[_currentPage.toInt()].name),
+                    style: const TextStyle(
+                      fontSize: 50,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
