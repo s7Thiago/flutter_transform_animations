@@ -49,7 +49,7 @@ class _CoffeeListState extends State<CoffeeList> {
           Positioned(
             left: 20,
             right: 20,
-            bottom: -size.height * .2,
+            bottom: -size.height * .22,
             height: size.height * .3,
             child: const DecoratedBox(
               decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
@@ -57,6 +57,7 @@ class _CoffeeListState extends State<CoffeeList> {
                   color: Colors.brown,
                   blurRadius: 90,
                   offset: Offset.zero,
+                  spreadRadius: 45,
                 )
               ]),
             ),
@@ -70,38 +71,43 @@ class _CoffeeListState extends State<CoffeeList> {
               color: Colors.red,
             ),
           ),
-          PageView.builder(
-            controller: _pageController,
-            itemCount: coffees.length,
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return const SizedBox.shrink();
-              }
+          Transform.scale(
+            scale: 1.6,
+            alignment: Alignment.bottomCenter,
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: coffees.length,
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return const SizedBox.shrink();
+                }
 
-              final coffee = coffees[index - 1];
-              final result = _currentPage - index + 1;
+                final coffee = coffees[index - 1];
+                final result = _currentPage - index + 1;
 
-              // Valor que será usado para aplicar na transformação das imagens dos cafés
-              final value = -.4 * result + 1;
+                // Valor que será usado para aplicar na transformação das imagens dos cafés
+                final value = -.4 * result + 1;
 
-              final opacity = value.clamp(0.0, 1.0);
+                final opacity = value.clamp(0.0, 1.0);
 
-              return Transform(
-                alignment: Alignment.bottomCenter,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.001)
-                  ..translate(
-                      0.0,
-                      MediaQuery.of(context).size.height /
-                          2.6 *
-                          (1 - value).abs())
-                  ..scale(value),
-                child:
-                    Opacity(opacity: opacity, child: Image.asset(coffee.image)),
-              );
-            },
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Transform(
+                    alignment: Alignment.bottomCenter,
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 2, 0.001)
+                      ..translate(0.0, size.height / 2.6 * (1 - value).abs())
+                      ..scale(value),
+                    child: Opacity(
+                      opacity: opacity,
+                      child: Image.asset(coffee.image, fit: BoxFit.fitHeight),
+                    ),
+                  ),
+                );
+              },
+            ),
           )
         ],
       ),
