@@ -37,6 +37,8 @@ class _CoffeeListState extends State<CoffeeList> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -44,6 +46,21 @@ class _CoffeeListState extends State<CoffeeList> {
       ),
       body: Stack(
         children: [
+          Positioned(
+            left: 20,
+            right: 20,
+            bottom: -size.height * .2,
+            height: size.height * .3,
+            child: const DecoratedBox(
+              decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                BoxShadow(
+                  color: Colors.brown,
+                  blurRadius: 90,
+                  offset: Offset.zero,
+                )
+              ]),
+            ),
+          ),
           Positioned(
             left: 0,
             top: 0,
