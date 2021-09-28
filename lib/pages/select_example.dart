@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:transform_example/pages/list/shrink_top_list.dart';
 import 'package:transform_example/pages/transform/transform_animations1.dart';
 import 'package:transform_example/pages/transform/transform_animations2.dart';
-
+import 'package:transform_example/pages/transitions/example1/transition1_example_splash_screen.dart';
 
 class SelectExample extends StatelessWidget {
   const SelectExample({Key? key}) : super(key: key);
@@ -18,6 +18,9 @@ class SelectExample extends StatelessWidget {
       },
       {
         'Shrink Top List': const ShrinkTopList(),
+      },
+      {
+        'Custom Transition Example': const Transition1ExampleSplashScreen(),
       },
     ];
 
