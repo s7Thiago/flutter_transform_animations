@@ -31,14 +31,15 @@ class Transitions1Details extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: TweenAnimationBuilder<double>(
                 tween: Tween(begin: 1.0, end: 0.0),
-                duration: const Duration(seconds: 1),
+                curve: Curves.bounceOut,
+                duration: const Duration(milliseconds: 1200),
                 child: Text(
                   '${character.description} ${character.description} ${character.description} ${character.description}',
                   textAlign: TextAlign.justify,
                 ),
                 builder: (context, value, child) {
                   return Transform.translate(
-                    offset: Offset(value * 100, 0.0),
+                    offset: Offset(value * 250, 0.0),
                     child: child!,
                   );
                 },
