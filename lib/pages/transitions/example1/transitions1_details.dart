@@ -12,14 +12,18 @@ class Transitions1Details extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Details: $character.title'),
+        title: Text('Details: ${character.title}'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            child: Image.network(
-              character.avatar,
-              fit: BoxFit.cover,
+            child: Hero(
+              tag: character.title,
+              child: Image.network(
+                character.avatar,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Expanded(
