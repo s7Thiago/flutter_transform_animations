@@ -56,7 +56,9 @@ class _Transitions1PageState extends State<Transitions1Page> {
         ],
       ),
       body: _characters != null
-          ? _getBodWidget()
+          ? AnimatedSwitcher(
+              duration: const Duration(milliseconds: 600),
+              child: _getBodWidget())
           : const Center(
               child: CircularProgressIndicator(),
             ),
