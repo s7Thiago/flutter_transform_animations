@@ -124,15 +124,18 @@ class HomeItem extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Opacity(
-              opacity: .65,
-              child: Image.network(
-                character.avatar,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  return loadingProgress == null
-                      ? child
-                      : const Center(child: CircularProgressIndicator());
-                },
+              opacity: .85,
+              child: Hero(
+                tag: character.title,
+                child: Image.network(
+                  character.avatar,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    return loadingProgress == null
+                        ? child
+                        : const Center(child: CircularProgressIndicator());
+                  },
+                ),
               ),
             ),
           ),
