@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:transform_example/pages/list/model/character.dart';
 
@@ -39,6 +41,7 @@ class _ShrinkTopListState extends State<ShrinkTopList> {
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
           controller: scrollController,
           slivers: [
             const SliverToBoxAdapter(
@@ -46,21 +49,30 @@ class _ShrinkTopListState extends State<ShrinkTopList> {
                 fallbackHeight: 100.0,
               ),
             ),
-            const SliverAppBar(
+            SliverAppBar(
               automaticallyImplyLeading: false,
               pinned: true,
               elevation: 0,
+              toolbarHeight: 150.0,
               backgroundColor: Colors.transparent,
-              title: Text(
-                'Shrink top list',
-                style: TextStyle(
-                  color: Colors.black,
+              title: SizedBox(
+                height: 150.0,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: List.generate(
+                      10,
+                      (index) => Container(
+                            width: 150.0,
+                            height: 150.0,
+                            color: Colors.deepPurple,
+                            margin: const EdgeInsets.all(5.0),
+                          )),
                 ),
               ),
             ),
 
             // ? Adicionando espaçamento
-            const SliverToBoxAdapter(child: SizedBox(height: 50)),
+            const SliverToBoxAdapter(child: SizedBox(height: 10)),
 
             SliverList(
               // ! Este delegate será usando porque serve para construir os itens dinamicamente
@@ -68,10 +80,10 @@ class _ShrinkTopListState extends State<ShrinkTopList> {
                 (context, index) {
                   final character = characters[index];
 
-                  final itemPositionOffset = index * itemSize / 2;
+                  final itemPositionOffset = index * itemSize / 1.85;
                   final difference =
                       scrollController.offset - itemPositionOffset;
-                  final percent = 1 - (difference / (itemSize / 2));
+                  final percent = .8 - (difference / (itemSize / 1.85));
                   double opacity = percent.clamp(0.0, 1.0);
                   double scale = percent.clamp(0.0, 1.0);
 
@@ -80,10 +92,11 @@ class _ShrinkTopListState extends State<ShrinkTopList> {
                     child: Opacity(
                       opacity: opacity,
                       child: Transform(
-                        alignment: Alignment.topCenter,
+                        alignment: Alignment.bottomCenter,
                         transform: Matrix4.identity()
-                          // ..setEntry(3, 2, 0.001)
-                          ..scale(scale, 1),
+                          ..setEntry(3, 2, 0.001)
+                          // ..rotateX(index < index * 2 ? percent : 0)
+                          ..scale(scale * .9, scale * .85),
                         child: Card(
                           shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
