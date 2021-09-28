@@ -29,9 +29,19 @@ class Transitions1Details extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Text(
-                '${character.description} ${character.description} ${character.description} ${character.description}',
-                textAlign: TextAlign.justify,
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 1.0, end: 0.0),
+                duration: const Duration(seconds: 1),
+                child: Text(
+                  '${character.description} ${character.description} ${character.description} ${character.description}',
+                  textAlign: TextAlign.justify,
+                ),
+                builder: (context, value, child) {
+                  return Transform.translate(
+                    offset: Offset(value * 100, 0.0),
+                    child: child!,
+                  );
+                },
               ),
             ),
           )

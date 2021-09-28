@@ -119,6 +119,7 @@ class HomeItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
+          // transitionDuration: const Duration(seconds: 1),
           pageBuilder: (context, animation, secondaryAnimation) {
             return FadeTransition(
               opacity: animation,
