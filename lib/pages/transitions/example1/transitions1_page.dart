@@ -118,12 +118,11 @@ class HomeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => Transitions1Details(character: character),
-          ),
-        );
+        Navigator.of(context).push(PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return Transitions1Details(character: character);
+          },
+        ));
       },
       child: Stack(
         children: [
