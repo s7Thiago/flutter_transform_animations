@@ -9,19 +9,19 @@ class CoffeeList extends StatefulWidget {
 }
 
 class _CoffeeListState extends State<CoffeeList> {
-  late final pageController;
+  late final _pageController;
 
   @override
   void initState() {
-    pageController = PageController(
-      viewportFraction: .3, // * Apenas 3 elementos serão visíveis
+    _pageController = PageController(
+      viewportFraction: .35, // * Apenas 3 itens serão visíveis
     );
     super.initState();
   }
 
   @override
   void dispose() {
-    pageController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -44,6 +44,10 @@ class _CoffeeListState extends State<CoffeeList> {
             ),
           ),
           PageView.builder(
+            controller: _pageController,
+            itemCount: coffees.length,
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               final coffee = coffees[index];
               return Image.asset(coffee.image);
