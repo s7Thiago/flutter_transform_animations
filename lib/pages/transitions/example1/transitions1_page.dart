@@ -120,7 +120,10 @@ class HomeItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return Transitions1Details(character: character);
+            return FadeTransition(
+              opacity: animation,
+              child: Transitions1Details(character: character),
+            );
           },
         ));
       },
