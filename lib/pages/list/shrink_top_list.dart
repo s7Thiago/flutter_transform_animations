@@ -46,6 +46,22 @@ class _ShrinkTopListState extends State<ShrinkTopList> {
                 fallbackHeight: 100.0,
               ),
             ),
+            const SliverAppBar(
+              automaticallyImplyLeading: false,
+              pinned: true,
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              title: Text(
+                'Shrink top list',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+
+            // ? Adicionando espaçamento
+            const SliverToBoxAdapter(child: SizedBox(height: 50)),
+
             SliverList(
               // ! Este delegate será usando porque serve para construir os itens dinamicamente
               delegate: SliverChildBuilderDelegate(
@@ -114,5 +130,39 @@ class _ShrinkTopListState extends State<ShrinkTopList> {
         ),
       ),
     );
+  }
+}
+
+class MyCustomHeader extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    // return Padding(
+    // padding: const EdgeInsets.symmetric(horizontal: 20.0),
+    // child: ListView(
+    //   scrollDirection: Axis.horizontal,
+    //   children: List.generate(
+    //     6,
+    //     (index) => Container(
+    //       width: 300,
+    //       height: 300,
+    //       color: Colors.deepPurple,
+    //       margin: const EdgeInsets.all(5.0),
+    //     ),
+    //   ),
+    // )
+    // );
+    return const Text('My Characters');
+  }
+
+  @override
+  double get maxExtent => 100.0;
+
+  @override
+  double get minExtent => 0.0;
+
+  @override
+  bool shouldRebuild(covariant MyCustomHeader oldDelegate) {
+    return true;
   }
 }
