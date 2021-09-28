@@ -26,16 +26,19 @@ class _Transition1ExampleSplashScreenState
       upperBound: 10.0,
     );
 
+    // Adicionando listener para observar quando a animação completar, e abrir a home page
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const Transitions1Page(),
+          ),
+        );
+      }
+    });
+
     // Inicia a animação
     _animationController.forward();
-
-    // Future.delayed(_duration).then(
-    //   (value) => Navigator.of(context).pushReplacement(
-    //     MaterialPageRoute(
-    //       builder: (context) => const Transitions1Page(),
-    //     ),
-    //   ),
-    // );
     super.initState();
   }
 
