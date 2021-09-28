@@ -38,109 +38,111 @@ class _ShrinkTopListState extends State<ShrinkTopList> {
       appBar: AppBar(
         title: Text('Shrink top list'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          controller: scrollController,
-          slivers: [
-            const SliverToBoxAdapter(
-              child: Placeholder(
-                fallbackHeight: 100.0,
-              ),
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        controller: scrollController,
+        slivers: [
+          const SliverToBoxAdapter(
+            child: Placeholder(
+              fallbackHeight: 100.0,
+              color: Colors.green,
             ),
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              pinned: true,
-              elevation: 0,
-              toolbarHeight: 150.0,
-              backgroundColor: Colors.transparent,
-              title: SizedBox(
-                height: 150.0,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(
-                      10,
-                      (index) => Container(
-                            width: 150.0,
-                            height: 150.0,
-                            color: Colors.deepPurple,
-                            margin: const EdgeInsets.all(5.0),
-                          )),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 10)),
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            pinned: true,
+            elevation: 0,
+            toolbarHeight: 150.0,
+            backgroundColor: Colors.transparent,
+            title: SizedBox(
+              height: 150.0,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: List.generate(
+                  10,
+                  (index) => Container(
+                    width: 150.0,
+                    height: 150.0,
+                    color: Colors.brown,
+                    margin: const EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(15.0),
+                    child: const FlutterLogo(),
+                  ),
                 ),
               ),
             ),
+          ),
 
-            // ? Adicionando espaçamento
-            const SliverToBoxAdapter(child: SizedBox(height: 10)),
+          // ? Adicionando espaçamento
+          const SliverToBoxAdapter(child: SizedBox(height: 10)),
 
-            SliverList(
-              // ! Este delegate será usando porque serve para construir os itens dinamicamente
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final character = characters[index];
+          SliverList(
+            // ! Este delegate será usando porque serve para construir os itens dinamicamente
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final character = characters[index];
 
-                  final itemPositionOffset = index * itemSize / 1.85;
-                  final difference =
-                      scrollController.offset - itemPositionOffset;
-                  final percent = .8 - (difference / (itemSize / 1.85));
-                  double opacity = percent.clamp(0.0, 1.0);
-                  double scale = percent.clamp(0.0, 1.0);
+                final itemPositionOffset = index * itemSize / 1.85;
+                final difference = scrollController.offset - itemPositionOffset;
+                final percent = .8 - (difference / (itemSize / 1.85));
+                double opacity = percent.clamp(0.0, 1.0);
+                double scale = percent.clamp(0.0, 1.0);
 
-                  return Align(
-                    heightFactor: .5,
-                    child: Opacity(
-                      opacity: opacity,
-                      child: Transform(
-                        alignment: Alignment.bottomCenter,
-                        transform: Matrix4.identity()
-                          ..setEntry(3, 2, 0.001)
-                          // ..rotateX(index < index * 2 ? percent : 0)
-                          ..scale(scale * .9, scale * .85),
-                        child: Card(
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            topRight: Radius.circular(20.0),
-                          )),
-                          color: Color(character.color),
-                          child: SizedBox(
-                            height: itemSize,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Text(
-                                      character.title,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                      ),
+                return Align(
+                  heightFactor: .5,
+                  child: Opacity(
+                    opacity: opacity,
+                    child: Transform(
+                      alignment: Alignment.bottomCenter,
+                      transform: Matrix4.identity()
+                        ..setEntry(3, 2, 0.001)
+                        // ..rotateX(index < index * 2 ? percent : 0)
+                        ..scale(scale * .9, scale * .85),
+                      child: Card(
+                        elevation: scale * 7,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0),
+                        )),
+                        color: Color(character.color),
+                        child: SizedBox(
+                          height: itemSize,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Text(
+                                    character.title,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
                                     ),
                                   ),
                                 ),
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(
-                                      20.0,
-                                    ),
+                              ),
+                              ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(
+                                    20.0,
                                   ),
-                                  child: Image.network(character.avatar),
                                 ),
-                              ],
-                            ),
+                                child: Image.network(character.avatar),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  );
-                },
-                childCount: characters.length,
-              ),
-            )
-          ],
-        ),
+                  ),
+                );
+              },
+              childCount: characters.length,
+            ),
+          )
+        ],
       ),
     );
   }
