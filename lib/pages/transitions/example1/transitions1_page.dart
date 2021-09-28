@@ -19,7 +19,12 @@ class _Transitions1PageState extends State<Transitions1Page> {
       const Duration(seconds: 3),
     ).then((_) {
       setState(() {
-        _characters = characters;
+        _characters = List.generate(
+          characters.length,
+          (index) => characters[index].copyWith(
+            title: '${characters[index].title} - $index',
+          ),
+        );
       });
     });
   }

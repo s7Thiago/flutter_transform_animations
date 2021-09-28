@@ -10,6 +10,20 @@ class Character {
     required this.description,
     required this.color,
   });
+
+  Character copyWith({
+    String? avatar,
+    String? title,
+    String? description,
+    int? color,
+  }) {
+    return Character(
+      avatar: avatar ?? this.avatar,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      color: color ?? this.color,
+    );
+  }
 }
 
 final List<Character> characters = [
