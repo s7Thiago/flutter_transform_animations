@@ -11,16 +11,26 @@ class CoffeeList extends StatefulWidget {
 class _CoffeeListState extends State<CoffeeList> {
   late final _pageController;
 
+  double _currentPage = 0.0;
+
+  void _coffeeScrollListener() {
+    setState(() {
+      _currentPage = _pageController.page;
+    });
+  }
+
   @override
   void initState() {
     _pageController = PageController(
       viewportFraction: .35, // * Apenas 3 itens serão visíveis
     );
+    _pageController.addListener(_coffeeScrollListener);
     super.initState();
   }
 
   @override
   void dispose() {
+    _pageController.removeListener(_coffeeScrollListener);
     _pageController.dispose();
     super.dispose();
   }
@@ -49,8 +59,31 @@ class _CoffeeListState extends State<CoffeeList> {
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
-              final coffee = coffees[index];
-              return Image.asset(coffee.image);
+              if (index == 0) {
+                return const SizedBox.shrink();
+              }
+
+              final coffee = coffees[index - 1];
+              final result = _currentPage - index + 1;
+
+              // Valor que será usado para aplicar na transformação das imagens dos cafés
+              final value = -.4 * result + 1;
+
+              final opacity = value.clamp(0.0, 1.0);
+
+              return Transform(
+                alignment: Alignment.bottomCenter,
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.001)
+                  ..translate(
+                      0.0,
+                      MediaQuery.of(context).size.height /
+                          2.6 *
+                          (1 - value).abs())
+                  ..scale(value),
+                child:
+                    Opacity(opacity: opacity, child: Image.asset(coffee.image)),
+              );
             },
           )
         ],
