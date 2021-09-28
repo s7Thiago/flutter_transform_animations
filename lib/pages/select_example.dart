@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transform_example/pages/coffee_chalenge/coffee_app.dart';
 import 'package:transform_example/pages/list/shrink_top_list.dart';
 import 'package:transform_example/pages/transform/transform_animations1.dart';
 import 'package:transform_example/pages/transform/transform_animations2.dart';
@@ -21,6 +22,9 @@ class SelectExample extends StatelessWidget {
       },
       {
         'Custom Transition Example': const Transition1ExampleSplashScreen(),
+      },
+      {
+        'Coffee Sample App': const CoffeeApp(),
       },
     ];
 
