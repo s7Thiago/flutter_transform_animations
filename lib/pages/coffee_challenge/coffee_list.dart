@@ -11,13 +11,21 @@ class CoffeeList extends StatefulWidget {
 }
 
 class _CoffeeListState extends State<CoffeeList> {
-  late final _pageController;
+  late final PageController _pageController;
+  late final PageController _pageTextController;
 
   double _currentPage = 0.0;
+  double _textPage = 0.0;
 
   void _coffeeScrollListener() {
     setState(() {
-      _currentPage = _pageController.page;
+      _currentPage = _pageController.page!;
+    });
+  }
+
+  void _textScrollListener() {
+    setState(() {
+      _textPage = _currentPage;
     });
   }
 
@@ -26,7 +34,11 @@ class _CoffeeListState extends State<CoffeeList> {
     _pageController = PageController(
       viewportFraction: .35, // * Apenas 3 itens serão visíveis
     );
+
+    _pageTextController = PageController();
+
     _pageController.addListener(_coffeeScrollListener);
+    _pageTextController.addListener(_textScrollListener);
     super.initState();
   }
 
@@ -34,6 +46,9 @@ class _CoffeeListState extends State<CoffeeList> {
   void dispose() {
     _pageController.removeListener(_coffeeScrollListener);
     _pageController.dispose();
+
+    _pageTextController.removeListener(_textScrollListener);
+    _pageTextController.dispose();
     super.dispose();
   }
 
@@ -72,6 +87,15 @@ class _CoffeeListState extends State<CoffeeList> {
               itemCount: coffees.length,
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
+              onPageChanged: (value) {
+                if (value < coffees.length) {
+                  _pageTextController.animateToPage(
+                    value,
+                    duration: _duration,
+                    curve: Curves.easeInOut,
+                  );
+                }
+              },
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return const SizedBox.shrink();
@@ -109,6 +133,23 @@ class _CoffeeListState extends State<CoffeeList> {
             height: 100,
             child: Column(
               children: [
+                Expanded(
+                  child: PageView.builder(
+                    itemCount: coffees.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: _pageTextController,
+                    itemBuilder: (context, index) {
+                      final opacity =
+                          1 - (index - _textPage).abs().clamp(0.0, 1.0);
+                      return Opacity(
+                        opacity: opacity,
+                        child: Text(
+                          coffees[index].name,
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 AnimatedSwitcher(
                   duration: _duration,
                   child: Text(
