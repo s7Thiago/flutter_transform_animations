@@ -13,7 +13,7 @@ class _Transition1ExampleSplashScreenState
     extends State<Transition1ExampleSplashScreen> {
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 3)).then(
+    Future.delayed(const Duration(seconds: 3)).then(
       (value) => Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const Transitions1Page(),
@@ -25,11 +25,12 @@ class _Transition1ExampleSplashScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Splash'),
+    return const Scaffold(
+      body: Center(
+        child: FlutterLogo(
+          size: 40,
+        ),
       ),
-      body: Container(),
     );
   }
 }
