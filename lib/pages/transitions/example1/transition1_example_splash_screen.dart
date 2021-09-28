@@ -10,25 +10,50 @@ class Transition1ExampleSplashScreen extends StatefulWidget {
 }
 
 class _Transition1ExampleSplashScreenState
-    extends State<Transition1ExampleSplashScreen> {
+    extends State<Transition1ExampleSplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  final _duration = const Duration(seconds: 3);
+
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3)).then(
-      (value) => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const Transitions1Page(),
-        ),
-      ),
+    // Inicializando o controller da animação da logo
+    _animationController = AnimationController(
+      vsync: this,
+      // Especificando a mesma dpuração da exibição da Splash
+      duration: _duration,
+      lowerBound: 1.0,
+      upperBound: 10.0,
     );
+
+    // Inicia a animação
+    _animationController.forward();
+
+    // Future.delayed(_duration).then(
+    //   (value) => Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(
+    //       builder: (context) => const Transitions1Page(),
+    //     ),
+    //   ),
+    // );
     super.initState();
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: FlutterLogo(
-          size: 40,
+        child: ScaleTransition(
+          scale: _animationController,
+          child: const FlutterLogo(
+            size: 40,
+          ),
         ),
       ),
     );
