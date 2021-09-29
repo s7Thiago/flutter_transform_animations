@@ -15,7 +15,7 @@ class CoffeeHome extends StatelessWidget {
           if (details.primaryDelta! < -20) {
             Navigator.of(context).push(
               PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 800),
+                transitionDuration: const Duration(milliseconds: 650),
                 pageBuilder: (context, animation, secondaryAnimation) {
                   return FadeTransition(
                     opacity: animation,
@@ -48,7 +48,7 @@ class CoffeeHome extends StatelessWidget {
               right: 0,
               top: size.height * 0.15,
               child: Hero(
-                tag: coffees[6].name,
+                tag: 'image_${coffees[6].image}',
                 child: Image.asset(coffees[6].image),
               ),
             ),
@@ -58,7 +58,7 @@ class CoffeeHome extends StatelessWidget {
               right: 0,
               bottom: 0,
               child: Hero(
-                tag: coffees[7].name,
+                tag: 'image_${coffees[7].image}',
                 child: Image.asset(
                   coffees[7].image,
                   fit: BoxFit.cover,
@@ -71,7 +71,7 @@ class CoffeeHome extends StatelessWidget {
               right: 0,
               bottom: -size.height * 0.8,
               child: Hero(
-                tag: coffees[8].name,
+                tag: 'image_${coffees[8].image}',
                 child: Image.asset(
                   coffees[8].image,
                   fit: BoxFit.cover,

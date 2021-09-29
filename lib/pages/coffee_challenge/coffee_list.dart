@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transform_example/pages/coffee_challenge/coffee_details_page.dart';
 import 'package:transform_example/pages/coffee_challenge/model/coffee.dart';
 
 const _duration = Duration(milliseconds: 300);
@@ -114,19 +115,35 @@ class _CoffeeListState extends State<CoffeeList> {
 
                 final opacity = value.clamp(0.0, 1.0);
 
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  child: Transform(
-                    alignment: Alignment.bottomCenter,
-                    transform: Matrix4.identity()
-                      ..setEntry(3, 2, 0.001)
-                      ..translate(0.0, size.height / 2.6 * (1 - value).abs())
-                      ..scale(value),
-                    child: Opacity(
-                      opacity: opacity,
-                      child: Hero(
-                        tag: coffee.name,
-                        child: Image.asset(coffee.image, fit: BoxFit.fitHeight),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 650),
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: CoffeeDetailsPage(coffee: coffee),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Transform(
+                      alignment: Alignment.bottomCenter,
+                      transform: Matrix4.identity()
+                        ..setEntry(3, 2, 0.001)
+                        ..translate(0.0, size.height / 2.6 * (1 - value).abs())
+                        ..scale(value),
+                      child: Opacity(
+                        opacity: opacity,
+                        child: Hero(
+                          tag: 'image_${coffee.image}',
+                          child:
+                              Image.asset(coffee.image, fit: BoxFit.fitHeight),
+                        ),
                       ),
                     ),
                   ),
@@ -139,48 +156,63 @@ class _CoffeeListState extends State<CoffeeList> {
             top: 0,
             right: 0,
             height: 100,
-            child: Column(
-              children: [
-                Expanded(
-                  child: PageView.builder(
-                    itemCount: coffees.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: _pageTextController,
-                    itemBuilder: (context, index) {
-                      final opacity =
-                          1 - (index - _textPage).abs().clamp(0.0, 1.0);
-                      return Opacity(
-                        opacity: opacity,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: size.width * .35,
-                          ),
-                          child: Text(
-                            coffees[index].name,
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w800,
+            child: TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 1.0, end: 0.0),
+              duration: _duration,
+              builder: (context, value, child) {
+                return Transform.translate(
+                  offset: Offset(0.0, -100 * value),
+                  child: child,
+                );
+              },
+              child: Column(
+                children: [
+                  Expanded(
+                    child: PageView.builder(
+                      itemCount: coffees.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      controller: _pageTextController,
+                      itemBuilder: (context, index) {
+                        final opacity =
+                            1 - (index - _textPage).abs().clamp(0.0, 1.0);
+                        return Opacity(
+                          opacity: opacity,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: size.width * .35,
+                            ),
+                            child: Hero(
+                              tag: 'text_${coffees[index].name}',
+                              child: Material(
+                                child: Text(
+                                  coffees[index].name,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  style: const TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: 15),
-                AnimatedSwitcher(
-                  duration: _duration,
-                  child: Text(
-                    '\$${coffees[_currentPage.toInt()].price.toStringAsFixed(2)}',
-                    key: Key(coffees[_currentPage.toInt()].name),
-                    style: const TextStyle(
-                      fontSize: 24,
+                        );
+                      },
                     ),
                   ),
-                )
-              ],
+                  const SizedBox(height: 15),
+                  AnimatedSwitcher(
+                    duration: _duration,
+                    child: Text(
+                      '\$${coffees[_currentPage.toInt()].price.toStringAsFixed(2)}',
+                      key: Key(coffees[_currentPage.toInt()].name),
+                      style: const TextStyle(
+                        fontSize: 24,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ],
