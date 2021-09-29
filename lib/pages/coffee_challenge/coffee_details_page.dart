@@ -62,7 +62,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                     duration: const Duration(milliseconds: 500),
                     builder: (context, value, child) {
                       return Transform.translate(
-                        offset: Offset(-100 * value, 240 * value),
+                        offset: Offset(-120, 10 * value),
                         child: child,
                       );
                     },
