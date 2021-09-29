@@ -13,7 +13,7 @@ class CoffeeHome extends StatelessWidget {
       body: GestureDetector(
         onVerticalDragUpdate: (details) {
           if (details.primaryDelta! < -20) {
-            Navigator.of(context).pushReplacement(
+            Navigator.of(context).push(
               PageRouteBuilder(
                 transitionDuration: const Duration(milliseconds: 650),
                 pageBuilder: (context, animation, secondaryAnimation) {

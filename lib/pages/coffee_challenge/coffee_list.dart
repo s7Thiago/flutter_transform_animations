@@ -60,6 +60,7 @@ class _CoffeeListState extends State<CoffeeList> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        leading: const BackButton(color: Colors.grey),
       ),
       body: Stack(
         children: [
