@@ -143,20 +143,31 @@ class _CoffeeListState extends State<CoffeeList> {
                           1 - (index - _textPage).abs().clamp(0.0, 1.0);
                       return Opacity(
                         opacity: opacity,
-                        child: Text(
-                          coffees[index].name,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.width * .35),
+                          child: Text(
+                            coffees[index].name,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
                         ),
                       );
                     },
                   ),
                 ),
+                const SizedBox(height: 15),
                 AnimatedSwitcher(
                   duration: _duration,
                   child: Text(
                     '\$${coffees[_currentPage.toInt()].price.toStringAsFixed(2)}',
                     key: Key(coffees[_currentPage.toInt()].name),
                     style: const TextStyle(
-                      fontSize: 50,
+                      fontSize: 24,
                     ),
                   ),
                 )
