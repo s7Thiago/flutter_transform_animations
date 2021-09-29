@@ -25,7 +25,7 @@ class _CoffeeListState extends State<CoffeeList> {
 
   void _textScrollListener() {
     setState(() {
-      _textPage = _currentPage;
+      _textPage = _pageController.page!;
     });
   }
 
@@ -92,7 +92,7 @@ class _CoffeeListState extends State<CoffeeList> {
                   _pageTextController.animateToPage(
                     value,
                     duration: _duration,
-                    curve: Curves.easeInOut,
+                    curve: Curves.easeInOutQuad,
                   );
                 }
               },
@@ -119,7 +119,10 @@ class _CoffeeListState extends State<CoffeeList> {
                       ..scale(value),
                     child: Opacity(
                       opacity: opacity,
-                      child: Image.asset(coffee.image, fit: BoxFit.fitHeight),
+                      child: Hero(
+                        tag: coffee.name,
+                        child: Image.asset(coffee.image, fit: BoxFit.fitHeight),
+                      ),
                     ),
                   ),
                 );
@@ -145,7 +148,8 @@ class _CoffeeListState extends State<CoffeeList> {
                         opacity: opacity,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: size.width * .35),
+                            horizontal: size.width * .35,
+                          ),
                           child: Text(
                             coffees[index].name,
                             textAlign: TextAlign.center,
