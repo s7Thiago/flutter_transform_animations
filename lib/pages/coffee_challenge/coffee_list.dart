@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:transform_example/pages/coffee_challenge/model/coffee.dart';
 
 const _duration = Duration(milliseconds: 300);
+const _initialPage = 8.0;
 
 class CoffeeList extends StatefulWidget {
   const CoffeeList({Key? key}) : super(key: key);
@@ -14,8 +15,8 @@ class _CoffeeListState extends State<CoffeeList> {
   late final PageController _pageController;
   late final PageController _pageTextController;
 
-  double _currentPage = 0.0;
-  double _textPage = 0.0;
+  double _currentPage = _initialPage;
+  double _textPage = _initialPage;
 
   void _coffeeScrollListener() {
     setState(() {
@@ -33,9 +34,12 @@ class _CoffeeListState extends State<CoffeeList> {
   void initState() {
     _pageController = PageController(
       viewportFraction: .35, // * Apenas 3 itens serão visíveis
+      initialPage: _initialPage.toInt(),
     );
 
-    _pageTextController = PageController();
+    _pageTextController = PageController(
+      initialPage: _initialPage.toInt(),
+    );
 
     _pageController.addListener(_coffeeScrollListener);
     _pageTextController.addListener(_textScrollListener);
