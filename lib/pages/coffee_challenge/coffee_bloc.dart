@@ -23,6 +23,8 @@ class CoffeeBloc {
   }
 
   void init() {
+    currentPage.value = _initialPage;
+    textPage.value = _initialPage;
     pageController.addListener(_coffeeScrollListener);
     pageTextController.addListener(_textScrollListener);
   }
