@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transform_example/pages/android_messages_animation/android_messages_animation.dart';
 import 'package:transform_example/pages/coffee_challenge/coffee_app.dart';
 import 'package:transform_example/pages/list/shrink_top_list.dart';
 import 'package:transform_example/pages/transform/transform_animations1.dart';
@@ -25,6 +26,9 @@ class SelectExample extends StatelessWidget {
       },
       {
         'Coffee Sample App': const CoffeeApp(),
+      },
+      {
+        'Android messages Animation': const AndroidMessagesAnimation(),
       },
     ];
 
