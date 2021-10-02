@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class AndroidMessagesAnimation extends StatefulWidget {
   const AndroidMessagesAnimation({Key? key}) : super(key: key);
@@ -9,7 +10,22 @@ class AndroidMessagesAnimation extends StatefulWidget {
 }
 
 class _AndroidMessagesAnimationState extends State<AndroidMessagesAnimation> {
-  bool expanded = false;
+  bool expanded = true;
+  final _scrollController = ScrollController();
+
+  _onScrollDirection() {
+    if (_scrollController.position.userScrollDirection ==
+        ScrollDirection.reverse) {
+      setState(() {
+        expanded = false;
+      });
+    } else if (_scrollController.position.userScrollDirection ==
+        ScrollDirection.forward) {
+      setState(() {
+        expanded = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +66,21 @@ class _AndroidMessagesAnimationState extends State<AndroidMessagesAnimation> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 35,
-                  itemBuilder: (context, index) {
-                    return _AndroidMessageItem(
-                        color:
-                            Colors.primaries[index % Colors.primaries.length]);
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (details) {
+                    _onScrollDirection();
+                    return true;
                   },
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: 35,
+                    itemBuilder: (context, index) {
+                      return _AndroidMessageItem(
+                        color:
+                            Colors.primaries[index % Colors.primaries.length],
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
