@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AndroidMessagesAnimation extends StatelessWidget {
+class AndroidMessagesAnimation extends StatefulWidget {
   const AndroidMessagesAnimation({Key? key}) : super(key: key);
+
+  @override
+  State<AndroidMessagesAnimation> createState() =>
+      _AndroidMessagesAnimationState();
+}
+
+class _AndroidMessagesAnimationState extends State<AndroidMessagesAnimation> {
+  bool expanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +19,14 @@ class AndroidMessagesAnimation extends StatelessWidget {
         // appBar: AppBar(
         //   title: const Text('Android messages animation'),
         // ),
+        floatingActionButton: _AndroidMessagesFAB(
+          expanded: expanded,
+          onTap: () {
+            setState(() {
+              expanded = !expanded;
+            });
+          },
+        ),
         body: SafeArea(
           child: Column(
             children: [
@@ -68,6 +84,57 @@ class _AndroidMessageItem extends StatelessWidget {
       title: const Text('515'),
       subtitle: const Text('Hey! What\'s up?'),
       trailing: const Text('30 min'),
+    );
+  }
+}
+
+const _duration = Duration(milliseconds: 400);
+const _minSize = 50.0;
+const _maxSize = 150.0;
+const _iconSize = 25.0;
+
+class _AndroidMessagesFAB extends StatelessWidget {
+  final bool expanded;
+  final VoidCallback? onTap;
+
+  const _AndroidMessagesFAB({
+    Key? key,
+    this.expanded = true,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const position = _minSize / 2 - _iconSize / 2;
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        curve: Curves.easeInOutQuart,
+        duration: _duration,
+        width: expanded ? _maxSize : _minSize,
+        height: _minSize,
+        decoration: BoxDecoration(
+          color: Colors.blue[800],
+          borderRadius: BorderRadius.circular(_minSize * .5),
+        ),
+        child: Stack(
+          children: const [
+            Positioned(
+              left: position,
+              top: position,
+              child: Icon(Icons.message),
+            ),
+            Positioned(
+              left: position + 1.5 * _iconSize,
+              top: position + 2,
+              child: Text(
+                'Start chat',
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
