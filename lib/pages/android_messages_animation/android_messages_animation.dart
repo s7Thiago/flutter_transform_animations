@@ -138,9 +138,16 @@ class _AndroidMessagesFAB extends StatelessWidget {
         width: expanded ? _maxSize : _minSize,
         height: _minSize,
         decoration: BoxDecoration(
-          color: Colors.blue[800],
-          borderRadius: BorderRadius.circular(_minSize * .5),
-        ),
+            color: Colors.blue[800],
+            borderRadius: BorderRadius.circular(_minSize * .5),
+            boxShadow: [
+              BoxShadow(
+                color: expanded ? Colors.black45 : Colors.black12,
+                offset: const Offset(0, 0),
+                blurRadius: 5,
+                spreadRadius: 2,
+              )
+            ]),
         child: Stack(
           children: const [
             Positioned(
